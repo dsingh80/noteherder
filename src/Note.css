@@ -1,0 +1,18 @@
+.Note button {
+  border: none;
+  border-radius: 3px;
+  background: none;
+  padding: 5px;
+  float: right;
+  margin-right: 5%;
+  cursor: pointer;
+}
+
+.Note button:hover > i.fa{
+  opacity: 1 !important;
+}
+.Note button i.fa {
+  opacity: .5;
+  font-size: 2rem;
+  margin: 0;
+}

@@ -67,7 +67,7 @@ ul#notes {
 }
 
 ul#notes > li {
-  height: 100px;
+  height: 140px;
   font-size: 90%;
   cursor: pointer;
   overflow: hidden;
@@ -97,6 +97,14 @@ ul#notes li:hover .note * {
 ul#notes li:hover .note {
   border-color: transparent;
 }
+
+ul#notes li:hover button{
+  border: none;
+  opacity: 1 !important;
+  background-color: #FFF;
+  color: #008BF8;
+}
+
 ul#notes li .note-title {
   color: #4a4a4a;
   font-family: "Fauna One";

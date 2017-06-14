@@ -4,15 +4,25 @@ import './NoteForm.css'
 class NoteForm extends Component{
     constructor(props){
         super(props);
+
+        console.log(this.props);
+
         this.state = {
-            title: '',
-            note: '',
+            title: this.props.title,
+            note: this.props.body,
         }
 
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleNoteChange = this.handleNoteChange.bind(this);
     }
 
+    componentWillReceiveProps(newProps){
+        this.setState({
+            title: newProps.title,
+            note: newProps.body,
+        })
+    }
+    
     handleTitleChange(ev){
         const newState = [...this.state]
         const newTitle = ev.target.value;

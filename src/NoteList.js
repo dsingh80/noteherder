@@ -24,10 +24,21 @@ class NoteList extends React.Component{
         ],
       }
 
+      this.deleteNote = this.deleteNote.bind(this);
+
     }
 
-    addNote(note, key){
-      return <Note title={note.title} body={note.body} key={key} />
+    deleteNote(ev){
+      const listItem = ev.currentTarget.parentNode;
+      const newNotes = [...this.state.notes];
+
+      for(let i=0; i<newNotes.length; i++){
+        if(newNotes[i].title === listItem.querySelector('.note-title').textContent){
+          newNotes.splice(i, 1);
+          listItem.remove();
+          break;
+        }
+      }
     }
 
     render(){
@@ -35,7 +46,7 @@ class NoteList extends React.Component{
         <div className="NoteList">
           <h3>Notes</h3>
           <ul id="notes">
-            {this.state.notes.map((note, key) => <Note title={note.title} body={note.body} key={key} />)}
+            {this.state.notes.map((note, key) => <Note title={note.title} body={note.body} key={key} onNoteClick={this.props.onNoteClick} onNoteDelete={this.deleteNote} />)}
           </ul>
         </div>
       )

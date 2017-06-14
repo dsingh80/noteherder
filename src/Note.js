@@ -1,4 +1,5 @@
 import React from 'react';
+import './Note.css';
 
 class Note extends React.Component{
     constructor(props){
@@ -8,11 +9,17 @@ class Note extends React.Component{
             title: this.props.title,
             body: this.props.body,
         }
+
+        this.updateForm = this.updateForm.bind(this);
+    }
+
+    updateForm(ev){
+        this.props.onNoteClick(this.state.title, this.state.body);
     }
 
     render(){
         return(
-            <li>
+            <li className="Note" onClick={this.updateForm}>
                 <div className="note">
                     <div className="note-title">
                         {this.state.title}
@@ -23,6 +30,9 @@ class Note extends React.Component{
                         </p>
                     </div>
                 </div>
+                <button className="button-delete" onClick={this.props.onNoteDelete}>
+                    <i className="fa fa-ban" aria-hidden="true"></i>
+                </button>
             </li>
         )
     }
