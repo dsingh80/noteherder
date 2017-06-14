@@ -27,6 +27,40 @@ font-family: "Fauna One";
 font-weight: 400;
 color: #008BF8; }
 
+
+.Nav {
+  width: 60px;
+  background-color: #f3f3f3;
+  padding: 0.5rem 0; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; }
+.Nav .logo {
+  font-family: "Fauna One";
+  color: #666;
+  font-size: 3rem;
+}
+.Nav .logo img {
+  width: 30px;
+  padding-left: 4px;
+}
+
+.Nav button {
+  background-color: transparent;
+  border: 0;
+  color: #008BF8;
+  cursor: pointer;
+  margin-top: 2rem;
+  position: relative;
+  width: 60%; }
+  .Nav button img {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: opacity 0.25s ease-in-out; }
+    .Nav button:hover img.outline {
+      opacity: 0; }
+
 i.fa-trash-o {
   cursor: pointer;
   color: #ccc;
