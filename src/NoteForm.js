@@ -5,40 +5,64 @@ class NoteForm extends Component{
     constructor(props){
         super(props);
 
-        console.log(this.props);
-
         this.state = {
-            title: this.props.title,
-            note: this.props.body,
+            title: this.props.currentNote!=null?this.props.notes[this.props.currentNote].title:'',
+            body: this.props.currentNote!=null?this.props.notes[this.props.currentNote].body:'',
         }
 
         this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleNoteChange = this.handleNoteChange.bind(this);
+        this.handleBodyChange = this.handleBodyChange.bind(this);
     }
 
     componentWillReceiveProps(newProps){
         this.setState({
-            title: newProps.title,
-            note: newProps.body,
+            title: newProps.currentNote!=null ? newProps.notes[newProps.currentNote].title : '',
+            body: newProps.currentNote!=null ? newProps.notes[newProps.currentNote].body : '',
         })
     }
     
     handleTitleChange(ev){
         const newState = [...this.state]
         const newTitle = ev.target.value;
-
         newState.title = newTitle;
 
-        this.setState(newState); 
+        console.log(newTitle);
+        this.setState(newState, () => {
+            const currentNote = this.props.notes[this.props.currentNote]
+            if(currentNote){
+                if(this.state.title !== currentNote.title){
+                    this.props.saveNote({
+                        title: newTitle,
+                        body: this.state.body,
+                    });
+                }
+            }
+        });
+        
     }
 
-    handleNoteChange(ev){
+    blankNote = () => { // syntax binds "this" automatically; bit dangerous though since it is going to be bound all the time
+        return {
+            id: null,
+            title: '',
+            body: '',
+        }
+    }
+
+    handleChanges = (ev) => {
+        const note = {...this.state};
+        note[ev.target.name] = ev.target.value
+
+        this.setState({...note}, () => this.props.saveNote({...this.state}));
+    }
+
+    handleBodyChange(ev){
         const newState = [...this.state]
-        const newNote = ev.target.value;
+        const newBody = ev.target.value;
 
-        newState.note = newNote;
+        newState.body = newBody;
 
-        this.setState(newState); 
+        this.setState(newState);
     }
 
     render(){
@@ -46,10 +70,10 @@ class NoteForm extends Component{
             <div className="NoteForm">
                 <form>
                 <p>
-                    <input type="text" name="title" placeholder="Title your note" value={this.state.title} onChange={this.handleTitleChange} />
+                    <input type="text" name="title" placeholder="Title your note" value={this.state.title} onChange={this.handleChanges} />
                 </p>
                 <p>
-                    <textarea name="body" cols="30" rows="10" placeholder="Just start typing..." value={this.state.note} onChange={this.handleNoteChange}></textarea>
+                    <textarea name="body" cols="30" rows="10" placeholder="Just start typing..." value={this.state.body} onChange={this.handleChanges}></textarea>
                 </p>
                 </form>
             </div>

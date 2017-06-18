@@ -14,7 +14,7 @@ class Note extends React.Component{
     }
 
     updateForm(ev){
-        this.props.onNoteClick(this.state.title, this.state.body);
+        this.props.onNoteClick(this.state);
     }
 
     render(){
