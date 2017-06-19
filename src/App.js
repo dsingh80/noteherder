@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import './App.css'
 import Main from './Main'
-import SignIn from './SignIn'
-import SignOut from './SignOut'
+import SignIn from './Signin'
+import SignOut from './Signout'
 import base, { auth } from './base'
 
 class App extends Component {

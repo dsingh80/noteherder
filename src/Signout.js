@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './SignOut.css'
+import './Signout.css'
 
 const SignOut = ({ signOut }) => {
   return (

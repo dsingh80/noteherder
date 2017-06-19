@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './SignIn.css'
+import './Signin.css'
 import { auth, githubProvider } from './base'
 
 const SignIn = () => {
