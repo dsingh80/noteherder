@@ -50,14 +50,16 @@ class App extends Component {
 
   removeNote = (note) => {
     const newNotes = {...this.state.notes};
-    console.log(newNotes);
+    console.log(["New Note: ", newNotes[note.id]]);
     newNotes[note.id] = null;
-    delete newNotes[note.id];
+    //delete newNotes[note.id];
 
-    console.log(newNotes);
     this.setState({
        notes: newNotes,
-    });
+    }, () => {console.log(this.state.notes)});
+
+
+    debugger;
 
   }
 
@@ -96,7 +98,7 @@ class App extends Component {
     return (
       <div>
         <SignOut signOut={this.signOut} />
-        <Main notes={this.state.notes} {...actions} {...noteData}/>
+        <Main {...actions} {...noteData}/>
       </div>
     )
   }
