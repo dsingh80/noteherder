@@ -30,6 +30,14 @@ class Main extends React.Component{
         )
     }
 
+    blankNote = () => { // syntax binds "this" automatically; bit dangerous though since it is going to be bound all the time
+        return {
+            id: Date.now(),
+            title: '',
+            body: '',
+        }
+    }
+
     updateForm(newNote){
         let noteIndex = null;
 
@@ -43,6 +51,16 @@ class Main extends React.Component{
         this.setState({
             currentNote: noteIndex,
         })
+    }
+
+    newNote = () => {
+        const newNotes = [...this.state.notes];
+        const newNote = this.blankNote();
+        newNotes[newNote.id] = newNote;
+
+        this.setState({
+            notes: newNotes,
+        });
     }
 
     saveNote(newNote){
@@ -66,7 +84,7 @@ class Main extends React.Component{
     render(){
         return(
             <div className="Main">
-                <SideBar />
+                <SideBar onNewNote={this.newNote}/>
                 <NoteList notes={this.state.notes} onNoteClick={this.updateForm} deleteNote={this.deleteNote} />
                 <NoteForm currentNote={this.state.currentNote} notes={this.state.notes} saveNote={this.saveNote} />
             </div>
