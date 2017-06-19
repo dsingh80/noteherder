@@ -18,6 +18,17 @@ class Main extends React.Component{
         this.deleteNote = this.deleteNote.bind(this);
     }
 
+    componentWillMount(){
+        const newNote = this.blankNote();
+        const newNotes = [...this.state.notes];
+        newNotes[newNote.id] = newNote;
+
+        this.setState({
+            currentNote: newNote.id,
+            notes: newNotes,
+        })
+    }
+    
     componentDidUpdate(){
         this.props.updateApp(this.state.notes);
     }
@@ -34,6 +45,7 @@ class Main extends React.Component{
 
         this.setState({
             currentNote: newNote.id,
+            
         })
     }
 

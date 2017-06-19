@@ -18,7 +18,12 @@ class App extends Component {
   }
 
   componentWillMount(){
-      
+      auth.onAuthStateChanged((userData) => {
+        if(userData)
+          this.authHandler(userData);
+        else
+          console.log("ERROR: User not signed in");
+      })
   }
 
   signedIn() {
@@ -33,6 +38,7 @@ class App extends Component {
 
   authHandler = (userData) => {
     this.setState({
+      notes: [],
       uid: userData.uid,
     }, this.syncNotes)
     
