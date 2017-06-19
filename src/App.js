@@ -1,67 +1,81 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
 
-import Main from './Main.js'
-import SignIn from './Signin.js';
-import SignOut from './Signout.js'
-import base, { auth } from './base.js';
+import './App.css'
+import Main from './Main'
+import SignIn from './SignIn'
+import SignOut from './SignOut'
+import base, { auth } from './base'
 
 class App extends Component {
-  constructor(){
-    
-    super();
+  constructor() {
+    super()
 
     this.state = {
+      notes: {},
       uid: null,
-      notes: [],
     }
   }
 
-  componentWillMount(){
-      auth.onAuthStateChanged((userData) => {
-        if(userData)
-          this.authHandler(userData);
-        else
-          console.log("ERROR: User not signed in");
-      })
+  componentWillMount() {
+    auth.onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.authHandler(user)
+        }
+      }
+    )
   }
 
-  signedIn() {
-    return this.state.uid;
+  syncNotes = () => {
+    base.syncState(
+      `${this.state.uid}/notes`,
+      {
+        context: this,
+        state: 'notes',
+      }
+    )
   }
-  
-  signOut = () => {
-    auth.signOut().then(() => {
-      this.setState({uid: null});
-    });
+
+  saveNote = (note) => {
+    if (!note.id) {
+      note.id = `note-${Date.now()}`
+    }
+    const notes = {...this.state.notes}
+    notes[note.id] = note
+    this.setState({ notes })
+  }
+
+  signedIn = () => {
+    return this.state.uid
   }
 
   authHandler = (userData) => {
-    this.setState({
-      notes: [],
-      uid: userData.uid,
-    }, this.syncNotes)
+    this.setState(
+      { uid: userData.uid },
+      this.syncNotes
+    )
+  }
+
+  signOut = () => {
+    auth
+      .signOut()
+      .then(() => this.setState({ uid: null }))
     
   }
 
-  syncNotes(){
-    base.syncState(
-        `${this.state.uid}/notes`,
-        {
-          context: this,
-          state: "notes"
-        }
+  renderMain = () => {
+    return (
+      <div>
+        <SignOut signOut={this.signOut} />
+        <Main notes={this.state.notes} saveNote={this.saveNote} />
+      </div>
     )
-  }
-  updateNotes = (newNotes) => {
-    this.setState({notes: newNotes});
   }
 
   render() {
     return (
       <div className="App">
-        {this.signedIn() ? <SignOut onSignOut={this.signOut} /> : <SignIn onSignIn={this.authHandler}/>}
-        {this.signedIn() ? <Main updateApp={this.updateNotes}/> : null}
+        { this.signedIn() ? this.renderMain() : <SignIn /> }
       </div>
     );
   }

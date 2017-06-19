@@ -27,6 +27,18 @@ font-family: "Fauna One";
 font-weight: 400;
 color: #008BF8; }
 
+i.fa-trash-o {
+  cursor: pointer;
+  color: #ccc;
+  vertical-align: middle;
+  margin-left: 1em; }
+  i.fa-trash-o:hover {
+    color: #999; }
+
+.Main {
+  display: flex;
+  height: 100vh;
+  align-items: stretch; }
 
 .Nav {
   width: 60px;
@@ -60,19 +72,6 @@ color: #008BF8; }
     transition: opacity 0.25s ease-in-out; }
     .Nav button:hover img.outline {
       opacity: 0; }
-
-i.fa-trash-o {
-  cursor: pointer;
-  color: #ccc;
-  vertical-align: middle;
-  margin-left: 1em; }
-  i.fa-trash-o:hover {
-    color: #999; }
-
-.Main {
-  display: flex;
-  height: 100vh;
-  align-items: stretch; }
 
 .NoteList {
   border-left: 1px solid #eee;

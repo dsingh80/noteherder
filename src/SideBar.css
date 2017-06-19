@@ -1,53 +1,21 @@
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 10px;
-}
-
-body {
-  font-size: 14px;
-  line-height: 1.42857143;
-  margin: 0;
-}
-
-img {
-  vertical-align: middle;
-}
-
-h1, h2, h3, h4, h5 {
-font-family: "Fauna One";
-font-weight: 400;
-color: #008BF8; }
-
-i.fa-trash-o {
-  cursor: pointer;
-  color: #ccc;
-  vertical-align: middle;
-  margin-left: 1em; }
-  i.fa-trash-o:hover {
-    color: #999; }
-
-    
-.SideBar {
+.Sidebar {
   width: 60px;
   background-color: #f3f3f3;
   padding: 0.5rem 0; 
   display: flex; 
   flex-direction: column; 
   align-items: center; }
-.SideBar .logo {
+.Sidebar .logo {
   font-family: "Fauna One";
   color: #666;
   font-size: 3rem;
 }
-.SideBar .logo img {
+.Sidebar .logo img {
   width: 30px;
   padding-left: 4px;
 }
 
-.SideBar button {
+.Sidebar button {
   background-color: transparent;
   border: 0;
   color: #008BF8;
@@ -55,10 +23,10 @@ i.fa-trash-o {
   margin-top: 2rem;
   position: relative;
   width: 60%; }
-  .SideBar button img {
+  .Sidebar button img {
     position: absolute;
     left: 0;
     width: 100%;
     transition: opacity 0.25s ease-in-out; }
-    .SideBar button:hover img.outline {
+    .Sidebar button:hover img.outline {
       opacity: 0; }
