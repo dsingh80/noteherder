@@ -16,8 +16,8 @@ class Note extends React.Component{
 
     componentWillReceiveProps(newProps){
         this.setState({
-            title: newProps.title,
-            body: newProps.body
+            title: newProps.note.title,
+            body: newProps.note.body
         })
     }
 

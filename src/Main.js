@@ -18,7 +18,10 @@ class Main extends React.Component{
         this.deleteNote = this.deleteNote.bind(this);
     }
 
-
+    componentDidUpdate(){
+        this.props.updateApp(this.state.notes);
+    }
+    
     blankNote = () => { // syntax binds "this" automatically; bit dangerous though since it is going to be bound all the time
         return {
             id: Date.now(),
@@ -39,6 +42,7 @@ class Main extends React.Component{
         const newNote = this.blankNote();
         newNotes[newNote.id] = newNote;
 
+        console.log(newNotes);
         this.setState({
             currentNote: newNote.id,
             notes: newNotes,
@@ -47,9 +51,10 @@ class Main extends React.Component{
 
     saveNote(newNote){
         const newNotes = [...this.state.notes];
-        newNotes[newNote.id] = newNote; //newNotes.push(newNote);
+        newNotes[newNote.id] = newNote;
 
         this.setState({
+            currentNote: newNote.id,
             notes: newNotes,  
         });
     }

@@ -4,7 +4,7 @@ import './App.css';
 import Main from './Main.js'
 import SignIn from './Signin.js';
 import SignOut from './Signout.js'
-import base from './base.js';
+import base, { auth } from './base.js';
 
 class App extends Component {
   constructor(){
@@ -12,18 +12,13 @@ class App extends Component {
     super();
 
     this.state = {
-      uid: 'dsingh80',
+      uid: null,
+      notes: [],
     }
   }
 
   componentWillMount(){
-      base.syncState(
-          'notes',
-          {
-              context: this,
-              state: "notes"
-          }
-      )
+      
   }
 
   signedIn() {
@@ -31,24 +26,36 @@ class App extends Component {
   }
   
   signOut = () => {
-    this.setState({uid: null});
-  }
-
-  signIn = () => {
-    this.setState({uid: "dsingh80"});
+    auth.signOut().then(() => {
+      this.setState({uid: null});
+    });
   }
 
   authHandler = (userData) => {
     this.setState({
       uid: userData.uid,
-    })
+    }, this.syncNotes)
+    
+  }
+
+  syncNotes(){
+    base.syncState(
+        `${this.state.uid}/notes`,
+        {
+          context: this,
+          state: "notes"
+        }
+    )
+  }
+  updateNotes = (newNotes) => {
+    this.setState({notes: newNotes});
   }
 
   render() {
     return (
       <div className="App">
-        {this.signedIn() ? <SignOut onSignOut={this.signOut} /> : <SignIn onSignIn={this.signIn}/>}
-        {this.signedIn() ? <Main /> : null}
+        {this.signedIn() ? <SignOut onSignOut={this.signOut} /> : <SignIn onSignIn={this.authHandler}/>}
+        {this.signedIn() ? <Main updateApp={this.updateNotes}/> : null}
       </div>
     );
   }
