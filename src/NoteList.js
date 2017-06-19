@@ -44,8 +44,6 @@ class NoteList extends React.Component{
           <ul id="notes">
             {
               Object.keys(this.state.notes).map((noteId, key) => {
-                console.log(noteId);
-                console.log(this.state.notes);
                 return <Note note={this.state.notes[noteId]} title={this.state.notes[noteId].title} body={this.state.notes[noteId].body} key={key} onNoteClick={this.props.onNoteClick} onNoteDelete={this.deleteNote} />}
                 )}
           </ul>

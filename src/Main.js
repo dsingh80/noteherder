@@ -3,7 +3,7 @@ import React from 'react'
 import SideBar from './SideBar.js'
 import NoteList from './NoteList.js'
 import NoteForm from './NoteForm.js'
-import base from './base.js';
+
 
 class Main extends React.Component{
     constructor(props){
@@ -13,22 +13,11 @@ class Main extends React.Component{
             notes:[],
         }
 
-        
-
         this.updateForm = this.updateForm.bind(this);
         this.saveNote = this.saveNote.bind(this);
         this.deleteNote = this.deleteNote.bind(this);
     }
 
-    componentWillMount(){
-        base.syncState(
-            'notes',
-            {
-                context: this,
-                state: "notes"
-            }
-        )
-    }
 
     blankNote = () => { // syntax binds "this" automatically; bit dangerous though since it is going to be bound all the time
         return {
@@ -39,17 +28,9 @@ class Main extends React.Component{
     }
 
     updateForm(newNote){
-        let noteIndex = null;
-
-        for(let i=0; i<this.state.notes.length; i++){
-            if(this.state.notes[i].title === newNote.title){
-                noteIndex = i;
-                break;
-            }
-        }
 
         this.setState({
-            currentNote: noteIndex,
+            currentNote: newNote.id,
         })
     }
 
@@ -59,6 +40,7 @@ class Main extends React.Component{
         newNotes[newNote.id] = newNote;
 
         this.setState({
+            currentNote: newNote.id,
             notes: newNotes,
         });
     }
