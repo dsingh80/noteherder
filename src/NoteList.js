@@ -8,7 +8,7 @@ class NoteList extends React.Component{
     constructor(props){
       super(props);
       this.state = {
-        notes: this.props.notes,
+        notes: [],
       }
 
       this.deleteNote = this.deleteNote.bind(this);
@@ -21,8 +21,10 @@ class NoteList extends React.Component{
         })
     }
 
-    deleteNote(ev){
-      const listItem = ev.currentTarget.parentNode;
+    deleteNote(note){
+
+      this.props.deleteNote(note);
+      /*const listItem = ev.currentTarget.parentNode;
       const newNotes = [...this.state.notes];
 
       for(let i=0; i<newNotes.length; i++){
@@ -32,6 +34,7 @@ class NoteList extends React.Component{
           break;
         }
       }
+      */
     }
 
     render(){
@@ -39,7 +42,12 @@ class NoteList extends React.Component{
         <div className="NoteList">
           <h3>Notes</h3>
           <ul id="notes">
-            {this.state.notes.map((note, key) => <Note title={note.title} body={note.body} key={key} onNoteClick={this.props.onNoteClick} onNoteDelete={this.deleteNote} />)}
+            {
+              Object.keys(this.state.notes).map((noteId, key) => {
+                console.log(noteId);
+                console.log(this.state.notes);
+                return <Note note={this.state.notes[noteId]} title={this.state.notes[noteId].title} body={this.state.notes[noteId].body} key={key} onNoteClick={this.props.onNoteClick} onNoteDelete={this.deleteNote} />}
+                )}
           </ul>
         </div>
       )

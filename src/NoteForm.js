@@ -8,42 +8,18 @@ class NoteForm extends Component{
         this.state = {
             title: this.props.currentNote!=null?this.props.notes[this.props.currentNote].title:'',
             body: this.props.currentNote!=null?this.props.notes[this.props.currentNote].body:'',
+            id: Date.now(),
         }
 
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleBodyChange = this.handleBodyChange.bind(this);
     }
 
-    componentWillReceiveProps(newProps){
-        this.setState({
-            title: newProps.currentNote!=null ? newProps.notes[newProps.currentNote].title : '',
-            body: newProps.currentNote!=null ? newProps.notes[newProps.currentNote].body : '',
-        })
-    }
-    
-    handleTitleChange(ev){
-        const newState = [...this.state]
-        const newTitle = ev.target.value;
-        newState.title = newTitle;
-
-        console.log(newTitle);
-        this.setState(newState, () => {
-            const currentNote = this.props.notes[this.props.currentNote]
-            if(currentNote){
-                if(this.state.title !== currentNote.title){
-                    this.props.saveNote({
-                        title: newTitle,
-                        body: this.state.body,
-                    });
-                }
-            }
-        });
-        
+    componentWillMount(){
+        this.setState(this.blankNote());
     }
 
     blankNote = () => { // syntax binds "this" automatically; bit dangerous though since it is going to be bound all the time
         return {
-            id: null,
+            id: Date.now(),
             title: '',
             body: '',
         }
@@ -51,18 +27,12 @@ class NoteForm extends Component{
 
     handleChanges = (ev) => {
         const note = {...this.state};
-        note[ev.target.name] = ev.target.value
+        note[ev.target.name] = ev.target.value;
 
-        this.setState({...note}, () => this.props.saveNote({...this.state}));
-    }
-
-    handleBodyChange(ev){
-        const newState = [...this.state]
-        const newBody = ev.target.value;
-
-        newState.body = newBody;
-
-        this.setState(newState);
+        this.setState(
+            {...note}, 
+            () => this.props.saveNote({...this.state})
+        );
     }
 
     render(){

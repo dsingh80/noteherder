@@ -6,11 +6,19 @@ class Note extends React.Component{
         super(props);
 
         this.state = {
-            title: this.props.title,
-            body: this.props.body,
+            title: this.props.note.title,
+            body: this.props.note.body,
+            id: Date.now(),
         }
 
         this.updateForm = this.updateForm.bind(this);
+    }
+
+    componentWillReceiveProps(newProps){
+        this.setState({
+            title: newProps.title,
+            body: newProps.body
+        })
     }
 
     updateForm(ev){
@@ -19,7 +27,7 @@ class Note extends React.Component{
 
     render(){
         return(
-            <li className="Note" onClick={this.updateForm}>
+            <li className="Note" data-id={this.props.state} onClick={this.updateForm}>
                 <div className="note">
                     <div className="note-title">
                         {this.state.title}
