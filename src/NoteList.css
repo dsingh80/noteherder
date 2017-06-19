@@ -86,7 +86,7 @@ ul#notes li .note-body * {
 }
 ul#notes li .note {
   display: block;
-  height: 100px;
+  height: 120px;
   padding: 1em;
   text-decoration: none;
 }

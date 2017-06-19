@@ -12,6 +12,7 @@ class App extends Component {
 
     this.state = {
       notes: {},
+      currentNoteId: null,
       uid: null,
     }
   }
@@ -42,7 +43,22 @@ class App extends Component {
     }
     const notes = {...this.state.notes}
     notes[note.id] = note
-    this.setState({ notes })
+    this.setState({ 
+      currentNoteId: note.id,
+      notes })
+  }
+
+  removeNote = (note) => {
+    const newNotes = {...this.state.notes};
+    console.log(newNotes);
+    newNotes[note.id] = null;
+    delete newNotes[note.id];
+
+    console.log(newNotes);
+    this.setState({
+       notes: newNotes,
+    });
+
   }
 
   signedIn = () => {
@@ -62,12 +78,25 @@ class App extends Component {
       .then(() => this.setState({ uid: null }))
     
   }
+  
+  setCurrentNoteId = (noteId) => {
+    this.setState({currentNoteId: noteId});
+  }
 
   renderMain = () => {
+    const actions = {
+      saveNote: this.saveNote,
+      removeNote: this.removeNote,
+      setCurrentNoteId: this.setCurrentNoteId,
+    }
+    const noteData = {
+      notes: this.state.notes,
+      currentNoteId: this.state.currentNoteId,
+    }
     return (
       <div>
         <SignOut signOut={this.signOut} />
-        <Main notes={this.state.notes} saveNote={this.saveNote} />
+        <Main notes={this.state.notes} {...actions} {...noteData}/>
       </div>
     )
   }
