@@ -8,7 +8,7 @@ import NoteForm from './NoteForm'
 const Main = (props) => {
   return (
     <div className="Main">
-      <SideBar resetCurrentNote={props.resetCurrentNote}/>
+      <SideBar resetCurrentNote={props.resetCurrentNote} signOut={props.signOut}/>
       <NoteList notes={props.notes} setCurrentNote={props.setCurrentNote} removeNote={props.removeNote}/>
       <NoteForm {...props} />
     </div>

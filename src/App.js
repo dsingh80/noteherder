@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import './App.css'
 import Main from './Main'
 import SignIn from './Signin'
-import SignOut from './Signout'
 import base, { auth, githubProvider, googleProvider } from './base'
 
 
@@ -29,13 +28,35 @@ class App extends Component {
   }
 
   syncNotes = () => {
-    base.syncState(
-      `${this.state.uid}/notes`,
+    this.ref = base.syncState(
+      `notes/${this.state.uid}`,
       {
         context: this,
         state: 'notes',
       }
     )
+  }
+
+  authHandler = (userData) => {
+    this.setState(
+      { uid: userData.uid },
+      this.syncNotes
+    )
+  }
+
+  signedIn = () => {
+    return this.state.uid
+  }
+
+  signOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        base.removeBinding(this.ref);
+        this.resetCurrentNote();
+        this.setState({ uid: null })
+    })
+    
   }
 
   blankNote = () => {
@@ -58,10 +79,6 @@ class App extends Component {
       notes })
   }
 
-  saveAndNew = () => {
-
-  }
-
   removeNote = (note) => {
     const newNotes = {...this.state.notes};
     
@@ -72,24 +89,6 @@ class App extends Component {
       notes: newNotes,
     });
 
-  }
-
-  signedIn = () => {
-    return this.state.uid
-  }
-
-  authHandler = (userData) => {
-    this.setState(
-      { uid: userData.uid },
-      this.syncNotes
-    )
-  }
-
-  signOut = () => {
-    auth
-      .signOut()
-      .then(() => this.setState({ uid: null }))
-    
   }
   
   setCurrentNote = (note) => {
@@ -106,16 +105,16 @@ class App extends Component {
       removeNote: this.removeNote,
       setCurrentNote: this.setCurrentNote,
       resetCurrentNote: this.resetCurrentNote,
+      signOut: this.signOut,
     }
     const noteData = {
       notes: this.state.notes,
       currentNote: this.state.currentNote,
     }
     return (
-      <div>
-        <SignOut signOut={this.signOut} />
+      //<div>
         <Main {...actions} {...noteData}/>
-      </div>
+      //</div>
     )
   }
 

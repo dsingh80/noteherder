@@ -1,4 +1,5 @@
 .Sidebar {
+  position: relative;
   width: 60px;
   background-color: #f3f3f3;
   padding: 0.5rem 0; 
@@ -22,7 +23,8 @@
   cursor: pointer;
   margin-top: 2rem;
   position: relative;
-  width: 60%; }
+  width: 60%;
+  height: 36px; }
   .Sidebar button img {
     position: absolute;
     left: 0;
