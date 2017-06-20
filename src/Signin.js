@@ -1,11 +1,11 @@
 import React from 'react'
 
 import './Signin.css'
-import { auth, githubProvider } from './base'
+import { auth } from './base' //, githubProvider, googleProvider }
 
-const SignIn = () => {
+const SignIn = (props) => {
   const authenticate = () => {
-    auth.signInWithPopup(githubProvider)
+    auth.signInWithPopup(props.prov)
   }
 
   return (
@@ -13,7 +13,7 @@ const SignIn = () => {
       className="SignIn"
       onClick={authenticate}
     >
-      Sign In With GitHub
+      Sign In With {props.name}
     </button>
   )
 }

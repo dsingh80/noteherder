@@ -4,7 +4,8 @@ import './App.css'
 import Main from './Main'
 import SignIn from './Signin'
 import SignOut from './Signout'
-import base, { auth } from './base'
+import base, { auth, githubProvider, googleProvider } from './base'
+
 
 class App extends Component {
   constructor() {
@@ -55,11 +56,9 @@ class App extends Component {
     //delete newNotes[note.id];
 
     this.setState({
-       notes: newNotes,
+      currentNoteId: (note.id===this.state.currentNoteId?null:this.state.currentNoteId),
+      notes: newNotes,
     }, () => {console.log(this.state.notes)});
-
-
-    debugger;
 
   }
 
@@ -103,10 +102,19 @@ class App extends Component {
     )
   }
 
+  loadLogin(){
+    return(
+      <div>
+        <SignIn name="Github" prov={githubProvider}/>
+        <SignIn name="Google" prov={googleProvider}/>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="App">
-        { this.signedIn() ? this.renderMain() : <SignIn /> }
+        { this.signedIn() ? this.renderMain() : this.loadLogin() }
       </div>
     );
   }
