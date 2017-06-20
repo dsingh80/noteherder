@@ -64,14 +64,13 @@ class App extends Component {
 
   removeNote = (note) => {
     const newNotes = {...this.state.notes};
-    console.log(["New Note: ", newNotes[note.id]]);
+    
     newNotes[note.id] = null;
-    //delete newNotes[note.id];
 
     this.setState({
-      currentNote: (note.id===this.state.currentNote?null:this.state.currentNote),
+      currentNote: this.blankNote(),
       notes: newNotes,
-    }, () => {console.log(this.state.notes)});
+    });
 
   }
 
