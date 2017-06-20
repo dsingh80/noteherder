@@ -3,28 +3,24 @@ import React, { Component } from 'react'
 import './NoteForm.css'
 
 class NoteForm extends Component {
-  constructor(props) {
-    super(props)
+  // constructor(props) {
+  //   super(props)
 
-    this.state = {
-      note: this.blankNote(),
-    }
-  }
+  //   this.state = {
+  //     note: this.blankNote(),
+  //   }
+  // }
 
-  componentWillReceiveProps(newProps){
-    let index = newProps.currentNoteId;
-    if(!index){
-      this.setState({note: this.blankNote()});
-    }
-    else{
-      this.setState({
-        note: newProps.notes[index]
-      })
-    }
-    
-    
-    
-  }
+  // componentWillReceiveProps(newProps){
+  //   let index = newProps.currentNoteId;
+  //   if(!index){
+  //     this.setState({note: this.blankNote()});
+  //   }
+  //   else if(newProps.currentNoteId !== this.state.note.id){
+  //     this.setState({
+  //       note: newProps.notes[index]
+  //     })
+  //   }
 
   blankNote = () => {
     return {
@@ -35,12 +31,13 @@ class NoteForm extends Component {
   }
 
   handleChanges = (ev) => {
-    const note = {...this.state.note}
+    const note = {...this.props.currentNote}
     note[ev.target.name] = ev.target.value
-    this.setState(
-      { note },
-      () => this.props.saveNote(this.state.note)
-    ) 
+    this.props.saveNote(note)
+    // this.setState(
+    //   { note },
+    //   () => this.props.saveNote(this.state.note)
+    // ) 
   }
 
   handleSubmit = (ev) => {
@@ -58,7 +55,7 @@ class NoteForm extends Component {
               name="title"
               placeholder="Title your note"
               onChange={this.handleChanges}
-              value={this.state.note.title}
+              value={this.props.currentNote.title}
             />
           </p>
           <p>
@@ -66,10 +63,9 @@ class NoteForm extends Component {
               name="body"
               placeholder="Just start typing..."
               onChange={this.handleChanges}
-              value={this.state.note.body}
+              value={this.props.currentNote.body}
             ></textarea>
           </p>
-          <button type="submit">Save and new</button>
         </form>
       </div>
     )

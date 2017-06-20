@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Note = ({ note, setCurrentNoteId, removeNote }) => {
+const Note = ({ note, setCurrentNote, removeNote }) => {
     
   const handleRemove = (ev) => {
     ev.preventDefault();
@@ -10,7 +10,7 @@ const Note = ({ note, setCurrentNoteId, removeNote }) => {
   return (
     
       <li>
-        <a onClick={() => setCurrentNoteId(note.id)}>
+        <a onClick={() => setCurrentNote(note.id)}>
           <div className="note">
             <div className="note-title">
               {note.title}
