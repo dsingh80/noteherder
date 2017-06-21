@@ -9,7 +9,7 @@ const NoteList = ({ notes, setCurrentNote, removeNote }) => {
       <h3>Notes</h3>
       <ul id="notes">
         { Object.keys(notes).map((noteId) => {
-          return <Note note={notes[noteId]} setCurrentNote={setCurrentNote} removeNote={removeNote} key={noteId} />
+          return <Note note={notes[noteId]} key={noteId} />
         }) }
       </ul>
     </div>

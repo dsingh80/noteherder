@@ -3,6 +3,18 @@ import React, { Component } from 'react'
 import './NoteForm.css'
 
 class NoteForm extends Component {
+
+  componentWillReceiveProps(newProps){
+    if(!newProps.routerProps)
+        return;
+    const newId = newProps.routerProps.match.params.id;
+    if(newId === this.props.currentNote.id)
+      return;
+    const note = newProps.notes[newId];
+    if(note)
+      newProps.setCurrentNote(note);
+  }
+
   handleChanges = (ev) => {
     const note = {...this.props.currentNote}
     note[ev.target.name] = ev.target.value

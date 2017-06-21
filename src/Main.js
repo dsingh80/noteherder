@@ -10,7 +10,7 @@ const Main = (props) => {
   return (
     <div className="Main">
       <SideBar resetCurrentNote={props.resetCurrentNote} signOut={props.signOut}/>
-      <NoteList notes={props.notes} setCurrentNote={props.setCurrentNote} removeNote={props.removeNote}/>
+      <NoteList notes={props.notes}/>
       <Switch>
         <Route path="/notes/:id" render={(routerProps)=><NoteForm {...props} routerProps={routerProps}/>} />
         <Route render={()=><NoteForm {...props}/>} />

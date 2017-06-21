@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 const Note = ({ note, setCurrentNote, removeNote }) => {
     
@@ -8,9 +9,9 @@ const Note = ({ note, setCurrentNote, removeNote }) => {
   }
 
   return (
-    
-      <li>
-        <a onClick={() => setCurrentNote(note.id)}>
+
+      <NavLink to={`/notes/${note.id}`}>
+        <li>
           <div className="note">
             <div className="note-title">
               {note.title}
@@ -21,9 +22,8 @@ const Note = ({ note, setCurrentNote, removeNote }) => {
               </p>
             </div>
           </div>
-        </a>
-        <button onClick={handleRemove}>Remove</button>
-      </li>
+        </li>
+      </NavLink>
     
   )
 }

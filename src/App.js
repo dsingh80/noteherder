@@ -16,9 +16,11 @@ class App extends Component {
       currentNote: this.blankNote(),
       uid: null,
     }
+
   }
 
   componentWillMount() {
+    this.getUserFromLocalStorage();
     auth.onAuthStateChanged(
       (user) => {
         if (user) {
@@ -28,6 +30,13 @@ class App extends Component {
     )
   }
 
+  getUserFromLocalStorage = () => {
+    const uid = localStorage.getItem('uid');
+    if(!uid)
+      return null;
+    
+    this.setState({ uid });
+  }
   syncNotes = () => {
     this.ref = base.syncState(
       `notes/${this.state.uid}`,
@@ -39,6 +48,7 @@ class App extends Component {
   }
 
   authHandler = (userData) => {
+    localStorage.setItem('uid', userData.uid);
     this.setState(
       { uid: userData.uid },
       this.syncNotes
@@ -53,9 +63,11 @@ class App extends Component {
     auth
       .signOut()
       .then(() => {
-        base.removeBinding(this.ref);
+        
         this.resetCurrentNote();
-        this.setState({ uid: null })
+        localStorage.removeItem('uid');
+        this.setState({ uid: null });
+        base.removeBinding(this.ref);
     })
     
   }
@@ -100,15 +112,6 @@ class App extends Component {
     this.setState({currentNote: this.blankNote()});
   }
 
-  loadLogin(){
-    return(
-      <div>
-        <SignIn name="Github" prov={githubProvider}/>
-        <SignIn name="Google" prov={googleProvider}/>
-      </div>
-    )
-  }
-
   render() {
     const actions = {
       saveNote: this.saveNote,
@@ -148,7 +151,7 @@ class App extends Component {
           )} />
 
           <Route render={() => <Redirect to="/notes" />} />
-          
+
         </Switch>
         
       </div>
