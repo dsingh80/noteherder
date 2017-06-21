@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css'
 import Main from './Main'
@@ -99,7 +100,16 @@ class App extends Component {
     this.setState({currentNote: this.blankNote()});
   }
 
-  renderMain = () => {
+  loadLogin(){
+    return(
+      <div>
+        <SignIn name="Github" prov={githubProvider}/>
+        <SignIn name="Google" prov={googleProvider}/>
+      </div>
+    )
+  }
+
+  render() {
     const actions = {
       saveNote: this.saveNote,
       removeNote: this.removeNote,
@@ -111,26 +121,20 @@ class App extends Component {
       notes: this.state.notes,
       currentNote: this.state.currentNote,
     }
-    return (
-      //<div>
-        <Main {...actions} {...noteData}/>
-      //</div>
-    )
-  }
 
-  loadLogin(){
-    return(
-      <div>
-        <SignIn name="Github" prov={githubProvider}/>
-        <SignIn name="Google" prov={googleProvider}/>
-      </div>
-    )
-  }
-
-  render() {
     return (
       <div className="App">
-        { this.signedIn() ? this.renderMain() : this.loadLogin() }
+        <Switch>
+          <Route path="/notes" render={() => <Main {...actions} {...noteData}/>} />
+          <Route path="/sign-in" render={() => { return(
+            <div>
+              <SignIn name="Github" prov={githubProvider}/>
+              <SignIn name="Google" prov={googleProvider}/>
+            </div>
+          )}} />
+          <Route render={() => <Redirect to="/notes" />} />
+        </Switch>
+        {/*{ this.signedIn() ? this.renderMain() : this.loadLogin() }*/}
       </div>
     );
   }
