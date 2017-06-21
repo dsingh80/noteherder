@@ -124,17 +124,33 @@ class App extends Component {
 
     return (
       <div className="App">
+
+
         <Switch>
-          <Route path="/notes" render={() => <Main {...actions} {...noteData}/>} />
-          <Route path="/sign-in" render={() => { return(
-            <div>
-              <SignIn name="Github" prov={githubProvider}/>
-              <SignIn name="Google" prov={googleProvider}/>
-            </div>
-          )}} />
+
+          <Route path="/notes" render={() => (
+            this.signedIn()
+            ?
+              <Main {...actions} {...noteData}/>
+            :
+              <Redirect to="/sign-in" />
+            )} />
+
+          <Route path="/sign-in" render={() => (
+            this.signedIn()
+            ?
+              <Redirect to="/notes" />
+            :
+              <div>
+                <SignIn name="Github" prov={githubProvider}/>
+                <SignIn name="Google" prov={googleProvider}/>
+              </div>
+          )} />
+
           <Route render={() => <Redirect to="/notes" />} />
+          
         </Switch>
-        {/*{ this.signedIn() ? this.renderMain() : this.loadLogin() }*/}
+        
       </div>
     );
   }
