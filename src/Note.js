@@ -2,11 +2,6 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 
 const Note = ({ note, setCurrentNote, removeNote }) => {
-    
-  const handleRemove = (ev) => {
-    ev.preventDefault();
-    removeNote(note);
-  }
 
   return (
 

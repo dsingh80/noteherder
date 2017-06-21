@@ -81,15 +81,21 @@ class App extends Component {
   }
 
   saveNote = (note) => {
+    let shouldRedirect = false;
     if (!note.id) {
       note.id = `note-${Date.now()}`
-      this.setCurrentNote(note);
+      shouldRedirect = true;
     }
     const notes = {...this.state.notes}
     notes[note.id] = note
     this.setState({ 
       currentNote: note,
-      notes })
+      notes 
+    })
+    
+    if(shouldRedirect){
+      this.props.history.push(`/notes/${note.id}`);
+    }
   }
 
   removeNote = (note) => {
@@ -100,7 +106,7 @@ class App extends Component {
     this.setState({
       currentNote: this.blankNote(),
       notes: newNotes,
-    });
+    }, this.props.history.push("/notes"));
 
   }
   
@@ -109,7 +115,10 @@ class App extends Component {
   }
 
   resetCurrentNote = () => {
-    this.setState({currentNote: this.blankNote()});
+    this.setState({
+      currentNote: this.blankNote(),
+    }, this.props.history.push("/notes"))
+    
   }
 
   render() {
