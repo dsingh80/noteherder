@@ -76,7 +76,7 @@ class App extends Component {
     return {
       id: null,
       title: '',
-      body: '',
+      body: [{insert: ''}],
     }
   }
 

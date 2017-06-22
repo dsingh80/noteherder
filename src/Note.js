@@ -13,7 +13,9 @@ const Note = ({ note, setCurrentNote, removeNote }) => {
             </div>
             <div className="note-body">
               <p>
-                {note.body}
+                {
+                    note.body ? note.body.map((textObj) => textObj.insert): ""
+                }
               </p>
             </div>
           </div>

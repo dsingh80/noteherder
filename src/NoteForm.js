@@ -25,18 +25,25 @@ class NoteForm extends Component {
       if(source == "user"){
         const contents = this.rte.getContents();
         const textObjects = contents.ops;
-        console.log(contents);
-        /*const note = {...this.props.currentNote}
-        note["body"] = contents;
-        this.props.saveNote(note); */
+        
+        const note = {...this.props.currentNote}
+        note.body = contents.ops;
+        this.props.saveNote(note);
       }
     })
   }
   
   componentWillReceiveProps(newProps){
-    if(newProps.currentNote.body)
-     //this.rte.setContents(newProps.note.body);
-
+    
+    /*if(newProps.currentNote.body){
+      let delta = {
+        ops: [...newProps.currentNote.body]
+      }
+      this.rte.setText("", "silent");
+      console.log(delta);
+      this.rte.updateContents(delta);
+    }
+    */
 
     if(newProps.routerProps){
       const newId = newProps.routerProps.match.params.id;
