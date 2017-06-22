@@ -1,10 +1,43 @@
 import React, { Component } from 'react'
+import Quill from 'quill';
 
 import './NoteForm.css'
+import './Quill.css'
 
 class NoteForm extends Component {
+  constructor(props){
+    super(props);
+    this.rte = null;
+  }
 
+  componentDidMount(){
+    this.rte = new Quill('#editor', {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          ['image', 'code-block']
+        ]
+      },
+      theme: 'snow'  // or 'bubble'
+    });
+
+    this.rte.on('text-change', (delta, oldDelta, source) => {
+      if(source == "user"){
+        const contents = this.rte.getContents();
+        const textObjects = contents.ops;
+        
+        const note = {...this.props.currentNote}
+        note["body"] = contents;
+        this.props.saveNote(note);
+      }
+    })
+  }
+  
   componentWillReceiveProps(newProps){
+    if(newProps.currentNote.body)
+      this.rte.setContents(newProps.note.body);
+
+
     if(!newProps.routerProps)
         return;
     const newId = newProps.routerProps.match.params.id;
@@ -26,6 +59,8 @@ class NoteForm extends Component {
   }
 
   render() {
+
+    
     return (
       <div className="NoteForm">
         <form>
@@ -38,14 +73,8 @@ class NoteForm extends Component {
               value={this.props.currentNote.title}
             />
           </p>
-          <p>
-            <textarea
-              name="body"
-              placeholder="Just start typing..."
-              onChange={this.handleChanges}
-              value={this.props.currentNote.body}
-            ></textarea>
-          </p>
+            <div id="editor">
+            </div>
           <button
             type="button"
             onClick={this.handleRemove}

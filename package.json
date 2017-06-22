@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "quill": "^1.2.6",
     "re-base": "^3.0.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.0",
