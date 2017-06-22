@@ -25,27 +25,28 @@ class NoteForm extends Component {
       if(source == "user"){
         const contents = this.rte.getContents();
         const textObjects = contents.ops;
-        
-        const note = {...this.props.currentNote}
+        console.log(contents);
+        /*const note = {...this.props.currentNote}
         note["body"] = contents;
-        this.props.saveNote(note);
+        this.props.saveNote(note); */
       }
     })
   }
   
   componentWillReceiveProps(newProps){
     if(newProps.currentNote.body)
-      this.rte.setContents(newProps.note.body);
+     //this.rte.setContents(newProps.note.body);
 
 
-    if(!newProps.routerProps)
+    if(newProps.routerProps){
+      const newId = newProps.routerProps.match.params.id;
+      if(newId === this.props.currentNote.id)
         return;
-    const newId = newProps.routerProps.match.params.id;
-    if(newId === this.props.currentNote.id)
-      return;
-    const note = newProps.notes[newId];
-    if(note)
-      newProps.setCurrentNote(note);
+      const note = newProps.notes[newId];
+      if(note)
+        newProps.setCurrentNote(note);
+    }
+    
   }
 
   handleChanges = (ev) => {
