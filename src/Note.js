@@ -2,9 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 
 const Note = ({ note, setCurrentNote, removeNote }) => {
-
+  
   return (
-
       <NavLink to={`/notes/${note.id}`}>
         <li>
           <div className="note">
